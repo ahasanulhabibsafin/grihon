@@ -42,16 +42,29 @@ export default function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const saved = localStorage.getItem('grihon_images');
-    if (saved) {
-      setImages(JSON.parse(saved));
-    } else {
+    console.log("Archive App Mounted");
+  }, []);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('grihon_images');
+      if (saved) {
+        setImages(JSON.parse(saved));
+      } else {
+        setImages(DEFAULT_IMAGES);
+      }
+    } catch (e) {
+      console.error('Failed to load images from localStorage:', e);
       setImages(DEFAULT_IMAGES);
     }
     
-    const savedDownloads = localStorage.getItem('grihon_downloads');
-    if (savedDownloads) {
-      setDownloadHistory(JSON.parse(savedDownloads));
+    try {
+      const savedDownloads = localStorage.getItem('grihon_downloads');
+      if (savedDownloads) {
+        setDownloadHistory(JSON.parse(savedDownloads));
+      }
+    } catch (e) {
+      console.error('Failed to load downloads from localStorage:', e);
     }
     
     const adminStatus = localStorage.getItem('grihon_admin');
