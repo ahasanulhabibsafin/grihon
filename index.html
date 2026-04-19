@@ -6,24 +6,8 @@
     <title>My Google AI Studio App</title>
   </head>
   <body>
-    <div id="root">
-      <div style="font-family: sans-serif; text-align: center; margin-top: 50px; padding: 20px; border: 2px solid blue;">
-        <h1 style="color: blue;">[PHASE 1] STATIC HTML LOADED</h1>
-        <p>If you see this but nothing else, the React script is failing to start.</p>
-      </div>
-    </div>
-    <script>
-      console.log("Inline script executing...");
-      const root = document.getElementById('root');
-      if (root) {
-        const div = document.createElement('div');
-        div.style.color = 'green';
-        div.style.textAlign = 'center';
-        div.innerHTML = '<h2>[PHASE 2] INLINE JS EXECUTING</h2>';
-        root.appendChild(div);
-      }
-    </script>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root"></div>
+    <script type="module" src="src/main.tsx"></script>
   </body>
 </html>
 
