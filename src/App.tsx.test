@@ -1,0 +1,10 @@
+import { useState } from 'react';
+
+export default function App() {
+  return (
+    <div style={{ padding: '50px', textAlign: 'center', background: '#eee', minHeight: '100vh' }}>
+      <h1 style={{ color: 'black', fontSize: '48px' }}>GRIHON TEST</h1>
+      <p>If you see this, the basic React app is working.</p>
+    </div>
+  );
+}

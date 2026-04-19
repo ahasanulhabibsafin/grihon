@@ -4,7 +4,6 @@
  */
 
 import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Download, Plus, X, Image as ImageIcon, Github, Search, Heart, User, Lock, LogOut } from 'lucide-react';
 
 const ADMIN_CREDENTIALS = {
@@ -240,18 +239,16 @@ export default function App() {
               Shop All Visuals
             </button>
           </div>
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            <AnimatePresence mode="popLayout">
-              {images
-                .filter(img => !downloadHistory.includes(img.id))
-                .slice(0, 6)
-                .map((img) => (
-                  <div key={img.id} className="break-inside-avoid">
-                    <ImageCard img={img} isAdmin={isAdmin} onDelete={deleteImage} onDownload={handleDownload} />
-                  </div>
-                ))}
-            </AnimatePresence>
+    <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      {images
+        .filter(img => !downloadHistory.includes(img.id))
+        .slice(0, 6)
+        .map((img) => (
+          <div key={img.id} className="break-inside-avoid">
+            <ImageCard img={img} isAdmin={isAdmin} onDelete={deleteImage} onDownload={handleDownload} />
           </div>
+        ))}
+    </div>
         </div>
       </section>
     </>
@@ -272,15 +269,13 @@ export default function App() {
               <button className="font-bold text-[#707072] hover:text-black transition-colors">Photography</button>
             </div>
           </div>
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            <AnimatePresence mode="popLayout">
-              {availableImages.map((img) => (
-                <div key={img.id} className="break-inside-avoid">
-                  <ImageCard img={img} isAdmin={isAdmin} onDelete={deleteImage} onDownload={handleDownload} />
-                </div>
-              ))}
-            </AnimatePresence>
-          </div>
+    <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      {availableImages.map((img) => (
+        <div key={img.id} className="break-inside-avoid">
+          <ImageCard img={img} isAdmin={isAdmin} onDelete={deleteImage} onDownload={handleDownload} />
+        </div>
+      ))}
+    </div>
         </div>
       </div>
     );
@@ -301,13 +296,11 @@ export default function App() {
           
           {downloadedImages.length > 0 ? (
             <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-              <AnimatePresence mode="popLayout">
-                {downloadedImages.map((img) => (
-                  <div key={img.id} className="break-inside-avoid">
-                    <ImageCard img={img} isAdmin={isAdmin} onDelete={deleteImage} onDownload={handleDownload} />
-                  </div>
-                ))}
-              </AnimatePresence>
+              {downloadedImages.map((img) => (
+                <div key={img.id} className="break-inside-avoid">
+                  <ImageCard img={img} isAdmin={isAdmin} onDelete={deleteImage} onDownload={handleDownload} />
+                </div>
+              ))}
             </div>
           ) : (
             <div className="py-20 text-center bg-gray-50 rounded-[40px] border border-dashed border-gray-200">
@@ -329,6 +322,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen selection:bg-black selection:text-white">
+      <div style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999, background: 'red', color: 'white', padding: '10px' }}>
+        DEBUG: APP IS RENDERING (NO MOTION)
+      </div>
       {/* Top Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 font-sans">
         <div className="nike-container h-16 flex items-center justify-between">
@@ -447,22 +443,15 @@ export default function App() {
       </footer>
 
       {/* Modals remain the same */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              className="relative bg-white w-full max-w-xl rounded-[40px] overflow-hidden shadow-2xl"
-            >
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div 
+            onClick={() => setIsModalOpen(false)}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          />
+          <div
+            className="relative bg-white w-full max-w-xl rounded-[40px] overflow-hidden shadow-2xl"
+          >
               <div className="p-10 md:p-14">
                 <div className="flex justify-between items-center mb-12">
                   <h3 className="text-3xl font-black tracking-tighter">ADD TO ARCHIVE</h3>
@@ -521,28 +510,20 @@ export default function App() {
                   </div>
                 </div>
               </div>
-            </motion.div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
       {/* Admin/User Login Modal */}
-      <AnimatePresence>
-        {isLoginModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsLoginModalOpen(false)}
-              className="absolute inset-0 bg-black/99 backdrop-blur-xl"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="relative bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl p-10"
-            >
+      {isLoginModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div 
+            onClick={() => setIsLoginModalOpen(false)}
+            className="absolute inset-0 bg-black/99 backdrop-blur-xl"
+          />
+          <div
+            className="relative bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl p-10"
+          >
               <div className="flex flex-col gap-8">
                 <div className="flex justify-between items-center">
                   <h3 className="text-3xl font-black tracking-tighter uppercase">{error ? 'Archive Limit' : 'Member Access'}</h3>
@@ -602,10 +583,9 @@ export default function App() {
                   )}
                 </form>
               </div>
-            </motion.div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </div>
   );
 }
@@ -618,12 +598,7 @@ function ImageCard({ img, isAdmin, onDelete, onDownload }: {
   key?: string | number
 }) {
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.4, ease: [0.165, 0.84, 0.44, 1] }}
+    <div
       className="group relative bg-[#F1F1F1] overflow-hidden cursor-pointer image-card-hover rounded-xl"
     >
       <img 
@@ -665,6 +640,6 @@ function ImageCard({ img, isAdmin, onDelete, onDownload }: {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
